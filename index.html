@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font-family: sans-serif; padding: 20px; background: #e3f2fd; }
+  h2 { color: #0d47a1; }
+  input { padding: 10px; width: 60%; font-size: 16px; border: 2px solid #90caf9; border-radius: 8px; }
+  button { padding: 10px 14px; font-size: 16px; border: none; border-radius: 8px; background: #1976d2; color: white; }
+  ul { padding-left: 0; list-style: none; }
+  li { font-size: 18px; margin: 10px 0; background: white; padding: 12px; border-radius: 10px; }
+  .done { text-decoration: line-through; color: gray; }
+  .del { margin-left: 10px; padding: 4px 8px; font-size: 14px; background: #ffcdd2; }
+</style>
+</head>
+<body>
+  <h2>मेरी टू-डू लिस्ट</h2>
+  <input id="task" placeholder="नया काम लिखो">
+  <button onclick="addTask()">जोड़ो</button>
+  <ul id="list"></ul>
+
+<script>
+var tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+
+function save() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function show() {
+  var list = document.getElementById("list");
+  list.innerHTML = "";
+  tasks.forEach(function(t, i) {
+    var item = document.createElement("li");
+    var label = document.createElement("span");
+    label.innerText = t.text;
+    if (t.done) label.classList.add("done");
+    label.onclick = function() {
+      tasks[i].done = !tasks[i].done;
+      save();
+      show();
+    };
+    var del = document.createElement("button");
+    del.innerText = "❌";
+    del.className = "del";
+    del.onclick = function() {
+      tasks.splice(i, 1);
+      save();
+      show();
+    };
+    item.appendChild(label);
+    item.appendChild(del);
+    list.appendChild(item);
+  });
+}
+
+function addTask() {
+  var box = document.getElementById("task");
+  if (box.value == "") return;
+  tasks.push({ text: box.value, done: false });
+  save();
+  show();
+  box.value = "";
+}
+
+show();
+</script>
+</body>
+</html>

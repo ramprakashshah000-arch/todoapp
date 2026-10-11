@@ -1,0 +1,16 @@
+{
+  "name": "My Tasks",
+  "short_name": "My Tasks",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#d6ecff",
+  "theme_color": "#5bb5f0",
+  "icons": [
+    {
+      "src": "1791678789014.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}
